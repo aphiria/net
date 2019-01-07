@@ -17,11 +17,12 @@ use Opulence\Net\Http\Formatting\RequestParser;
 use Opulence\Net\Http\HttpHeaders;
 use Opulence\Net\Http\IHttpBody;
 use Opulence\Net\Http\IHttpRequestMessage;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the HTTP request message parser
  */
-class RequestParserTest extends \PHPUnit\Framework\TestCase
+class RequestParserTest extends TestCase
 {
     /** @var RequestParser The parser to use in tests */
     private $parser;
@@ -66,12 +67,14 @@ class RequestParserTest extends \PHPUnit\Framework\TestCase
     public function testGettingMimeTypeOfNonRequestNorMultipartBodyPartThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Request must be of type Opulence\Net\Http\IHttpRequestMessage or Opulence\Net\Http\MultipartBodyPart');
         $this->parser->getMimeType([]);
     }
 
     public function testParsingMultipartRequestWithoutBoundaryThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('"boundary" is missing in Content-Type header');
         $this->headers->add('Content-Type', 'multipart/mixed');
         $this->parser->readAsMultipart($this->request);
     }
@@ -79,6 +82,7 @@ class RequestParserTest extends \PHPUnit\Framework\TestCase
     public function testParsingNonRequestNorMultipartBodyPartThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Request must be of type Opulence\Net\Http\IHttpRequestMessage or Opulence\Net\Http\MultipartBodyPart');
         $this->parser->readAsMultipart([]);
     }
 }

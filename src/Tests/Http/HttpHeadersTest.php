@@ -177,7 +177,7 @@ class HttpHeadersTest extends TestCase
     public function testAddRangeOnInvalidValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Value must be instance of Opulence\Collections\KeyValuePair');
+        $this->expectExceptionMessage(sprintf('Value must be instance of %s', KeyValuePair::class));
         $this->headers->addRange(['invalid KeyValuePair']);
     }
 }

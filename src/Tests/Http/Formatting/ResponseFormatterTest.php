@@ -72,7 +72,7 @@ class ResponseFormatterTest extends TestCase
     public function testRedirectingToUriThatIsNotUriNorStringThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Uri must be instance of Opulence\Net\Uri or string');
+        $this->expectExceptionMessage(sprintf('Uri must be instance of %s or string', Uri::class));
         $this->formatter->redirectToUri($this->response, [], 301);
     }
 }

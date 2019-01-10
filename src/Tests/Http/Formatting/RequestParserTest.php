@@ -16,6 +16,7 @@ use Opulence\Collections\IDictionary;
 use Opulence\Net\Http\Formatting\RequestParser;
 use Opulence\Net\Http\HttpHeaders;
 use Opulence\Net\Http\IHttpBody;
+use Opulence\Net\Http\MultipartBodyPart;
 use Opulence\Net\Http\IHttpRequestMessage;
 use PHPUnit\Framework\TestCase;
 
@@ -67,7 +68,7 @@ class RequestParserTest extends TestCase
     public function testGettingMimeTypeOfNonRequestNorMultipartBodyPartThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Request must be of type Opulence\Net\Http\IHttpRequestMessage or Opulence\Net\Http\MultipartBodyPart');
+        $this->expectExceptionMessage(sprintf('Request must be of type %s or %s', IHttpRequestMessage::class, MultipartBodyPart::class));
         $this->parser->getMimeType([]);
     }
 
@@ -82,7 +83,7 @@ class RequestParserTest extends TestCase
     public function testParsingNonRequestNorMultipartBodyPartThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Request must be of type Opulence\Net\Http\IHttpRequestMessage or Opulence\Net\Http\MultipartBodyPart');
+        $this->expectExceptionMessage(sprintf('Request must be of type %s or %s', IHttpRequestMessage::class, MultipartBodyPart::class));
         $this->parser->readAsMultipart([]);
     }
 }
